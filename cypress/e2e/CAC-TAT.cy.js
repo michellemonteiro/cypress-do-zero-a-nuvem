@@ -50,10 +50,10 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     //💡 Nota: O comando .check() é o preferido para checkboxes e radios, pois simula o comportamento real do usuário e garante que os eventos corretos de mudança de estado sejam disparados, sem a necessidade de cy.contains('button', 'Enviar').click() //Para selecionar a partir do nome que se .
 
     // 🤖 Localiza o elemento de input (radio button) que tem o valor 'elogio'
-    cy.get('input[type="radio"][value="elogio"]')
+    cy.get('input[type="radio"][value="elogio"]') // Usando seletor CSS para encontrar o radio button com valor 'elogio'. Veja que estou usando aspas simples por fora e aspas duplas por dentro. Quando utilizar aspas simples por fora, dentro do seletor CSS, as aspas devem ser duplas. E quando utilizar aspas duplas por fora, dentro do seletor CSS, as aspas devem ser simples.
       // 1. Usa o comando .check() para marcar/selecionar o radio button encontrado
       .check()
-      // 🤖 2. Asserção principal: Verifica se o elemento AGORA está marcado (confirma que o .check() funcionou)
+      // 🤖 2. Asserção principal: Verifica se o elemento Elogio está marcado (confirma que o .check() funcionou)
       .should('be.checked')
 
     // ✦ "Checkar" o meio de contato "E-mail" ✦ //
@@ -84,7 +84,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .as('botaoEnviar')
       .should('be.visible')
     cy.contains('button', 'Enviar').click() // Outra forma de clicar no botão Enviar usando cy.contains()
-// ★★★★ Antes do cy.contains, estávamos usando o comando cy.get('button[type="submit"]').click() para clicar no botão Enviar. No entanto, ao usar cy.contains('button', 'Enviar').click(), garantimos que estamos clicando especificamente no botão que contém o texto "Enviar". Isso é especialmente útil quando há mais de um botão na página ou, quando o seletor é complexo ou, quando não se tem um ID ou classe específica para o botão. ★★★★ //
+    // ★★★★ Antes do cy.contains, estávamos usando o comando cy.get('button[type="submit"]').click() para clicar no botão Enviar. No entanto, ao usar cy.contains('button', 'Enviar').click(), garantimos que estamos clicando especificamente no botão que contém o texto "Enviar". Isso é especialmente útil quando há mais de um botão na página ou, quando o seletor é complexo ou, quando não se tem um ID ou classe específica para o botão. ★★★★ //
 
     // ✦ Verificar se a mensagem de sucesso é exibida ✦ //
     cy.get('.success')
@@ -347,10 +347,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   })
 
-
   //♥️♥️♥️♥️♥️♥️ Teste sem preencher campo obrigatório - Sobrenome ♥️♥️♥️♥️♥️♥️♥️ //
-
-
 
   it('Não preencher campo sobrenome - Campo Obrigatório', () => {
 
@@ -575,7 +572,181 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('.success')
       .should('be.visible')
 
+  })
 
+  // ♥️♥️♥️♥️♥️♥️ Teste de Select - Selecionar produtos pelo valor ♥️♥️♥️♥️♥️♥️♥️ //
 
+  it('Selecionar produtos pelo valor', () => {
+
+    // ✦ Selecionar o produto "YouTube" da lista de seleção pelo valor ✦ //
+    cy.get('#product')
+      .select('youtube') // Seleciona o produto pelo valor do atributo 'value' na tag <option>
+      .should('have.value', 'youtube') // Verifica se o valor selecionado é 'youtube'
+
+    // ✦ Selecionar o produto "Mentoria" da lista de seleção pelo valor ✦ //
+    cy.get('#product')
+      .select('mentoria') // Seleciona o produto pelo valor do atributo 'value' na tag <option>
+      .should('have.value', 'mentoria') // Verifica se o valor selecionado é 'mentoria'
+
+    // ✦ Selecionar o produto "Blog" da lista de seleção pelo valor ✦ //
+    cy.get('#product')
+      .select('blog') // Seleciona o produto pelo valor do atributo 'value' na tag <option>
+      .should('have.value', 'blog') // Verifica se o valor selecionado é 'blog'
+
+    // ✦ Selecionar o produto "Curso" da lista de seleção pelo valor ✦ //
+    cy.get('#product')
+      .select('cursos') // Seleciona o produto pelo valor do atributo 'value' na tag <option>
+      .should('have.value', 'cursos') // Verifica se o valor selecionado é 'curso'
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Teste de Select - Selecionar produtos pelo texto ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it('Selecionar produtos pelo texto', () => {
+
+    // ✦ Selecionar o produto "YouTube" da lista de seleção pelo texto visível ✦ //
+    cy.get('#product')
+      .select('YouTube') // Seleciona o produto pelo texto visível na tag <option>
+      .should('have.value', 'youtube') // Verifica se o valor selecionado é 'youtube'
+
+    // ✦ Selecionar o produto "Mentoria" da lista de seleção pelo texto visível ✦ //
+    cy.get('#product')
+      .select('Mentoria') // Seleciona o produto pelo texto visível na tag <option>
+      .should('have.value', 'mentoria') // Verifica se o valor selecionado é 'mentoria'
+
+    // ✦ Selecionar o produto "Blog" da lista de seleção pelo texto visível ✦ //
+    cy.get('#product')
+      .select('Blog') // Seleciona o produto pelo texto visível na tag <option>
+      .should('have.value', 'blog') // Verifica se o valor selecionado é 'blog'
+
+    // ✦ Selecionar o produto "Curso" da lista de seleção pelo texto visível ✦ //
+    cy.get('#product')
+      .select('Cursos') // Seleciona o produto pelo texto visível na tag <option>
+      .should('have.value', 'cursos') // Verifica se o valor selecionado é 'curso'
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Teste de Select - Selecionar produtos pelo índice ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it('Selecionar produtos pelo índice', () => { //Índice começa em 0 (zero) - YouTube = 0, Mentoria = 1, Blog = 2, Curso = 3 
+
+    // ✦ Selecionar o produto "YouTube" da lista de seleção pelo índice ✦ //
+    cy.get('#product')
+      .select(1) // Seleciona o produto pelo índice (posição) na lista de opções (blog está na posição 1 porque, o índice começa em 0 e o primeiro item é "Selecione um produto" que se encontra desabilitado)
+      .should('have.value', 'blog') // Verifica se o valor selecionado é 'blog'
+
+    // ✦ Selecionar o produto "Mentoria" da lista de seleção pelo índice ✦ //
+    cy.get('#product')
+      .select(2) // Seleciona o produto pelo índice (posição) na lista de opções
+      .should('have.value', 'cursos') // Verifica se o valor selecionado é 'cursos'
+
+    // ✦ Selecionar o produto "Blog" da lista de seleção pelo índice ✦ //
+    cy.get('#product')
+      .select(3) // Seleciona o produto pelo índice (posição) na lista de opções
+      .should('have.value', 'mentoria') // Verifica se o valor selecionado é 'mentoria'
+
+    // ✦ Selecionar o produto "Curso" da lista de seleção pelo índice ✦ //
+    cy.get('#product')
+      .select(4) // Seleciona o produto pelo índice (posição) na lista de opções
+      .should('have.value', 'youtube') // Verifica se o valor selecionado é 'youtube'
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Marca cada tipo de atendimento ♥️♥️♥️♥️♥️♥️♥️ //
+  it('Marca cada tipo de atendimento', () => {
+
+    // ✦ Selecionar cada tipo de atendimento (radio buttons) e verificar se estão marcados ✦ //
+
+    cy.get('input[type="radio"]') // Seleciona todos os elementos de input do tipo radio
+      .should('have.length', 3) // Verifica se existem exatamente 3 radio buttons na página
+      .each(($radio) => { // Itera sobre cada radio button encontrado //Posso colocar qualquer nome no lugar de $radio, como por exemplo: $elemento, $el, $item, etc. Qualqwer nome que comece com $ indica que é um elemento jQuery. Posso colocar qualquer nome que eu quiser, desde que comece com $. E se não começar com $, o Cypress vai entender que é uma variável comum do JavaScript. Exemplo de variável comum do JavaScript: elemento, el, item, etc. Exemplo de variável jQuery: $elemento, $el, $item, etc.
+        cy.wrap($radio) // Envolve o elemento jQuery para usar comandos Cypress
+          .check() // Marca o radio button atual
+          .should('be.checked') // Verifica se o radio button atual está marcado
+      })
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Marca ambos os checkboxes, depois desmarca o último ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it('Marca ambos os checkboxes, depois desmarca o último', () => {
+
+    // ✦ Selecionar ambos os checkboxes e verificar se estão marcados ✦ //
+
+    cy.get('input[type="checkbox"]') // Seleciona todos os elementos de input do tipo checkbox
+      .should('have.length', 3) // Verifica se existem exatamente 3 checkboxes na página
+      .as('checkboxes') // Dá um alias para o conjunto de checkboxes para reutilização
+
+    cy.get('@checkboxes') // Usa o alias para selecionar os checkboxes
+      .check() // Marca todos os checkboxes
+      .should('be.checked') // Verifica se todos os checkboxes estão marcados
+
+    // ✦ Desmarcar o último checkbox e verificar se está desmarcado ✦ //
+
+    cy.get('@checkboxes') // Usa o alias para selecionar os checkboxes
+      .last() // Seleciona o último checkbox do conjunto
+      .uncheck() // Desmarca o último checkbox
+      .should('not.be.checked') // Verifica se o último checkbox está desmarcado
+
+  })
+
+  // ♥️♥️♥️♥️♥️♥️  Marca ambos checkboxes, depois demarca o último ♥️♥️♥️♥️♥️♥️♥️ //
+  it('Seleciona ambos checkboxes, depois desmarca o último', () => {
+
+    // ✦ Selecionar ambos os checkboxes e verificar se estão marcados ✦ //
+
+    cy.get('input[type="checkbox"]') // Seleciona todos os elementos de input do tipo checkbox
+      .should('have.length', 2) // Verifica se existem exatamente 3 checkboxes na página
+      .as('checkboxes') // Dá um alias para o conjunto de checkboxes para reutilização
+
+    cy.get('@checkboxes') // Usa o alias para selecionar os checkboxes
+      .check() // Marca todos os checkboxes
+      .should('be.checked') // Verifica se todos os checkboxes estão marcados
+
+    // ✦ Desmarcar o último checkbox e verificar se está desmarcado ✦ //
+
+    cy.get('@checkboxes') // Usa o alias para selecionar os checkboxes
+      .last() // Seleciona o último checkbox do conjunto
+      .uncheck() // Desmarca o último checkbox
+      .should('not.be.checked') // Verifica se o último checkbox está desmarcado  
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Teste de upload de arquivo - Seleção pelo caminho ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it('Faz upload de um arquivo da pasta fixtures usando o comando selectFile', () => {
+
+    // ✦ Fazer upload de um arquivo da pasta fixtures usando o comando selectFile e verificar se o arquivo foi carregado corretamente ✦ //
+
+    cy.get('input[type="file"]') // Seleciona o elemento de input do tipo file (campo de upload)
+      .should('exist') // Verifica se o campo de upload existe na página
+      .selectFile('cypress/fixtures/example.json') // Usa o comando selectFile para selecionar o arquivo example.json da pasta fixtures
+      .then(input => { // Usa uma função then para acessar o elemento input após o upload
+        expect(input[0].files[0].name).to.equal('example.json') // Verifica se o nome do arquivo carregado é 'example.json'
+      })
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Seleciona um arquivo simulando um drag-and-drop ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it('Seleciona um arquivo simulando um drag-and-drop', () => {
+
+    // ✦ Fazer upload de um arquivo simulando um drag-and-drop e verificar se o arquivo foi carregado corretamente ✦ // 
+    cy.get('input[type="file"]') // Seleciona o elemento de input do tipo file (campo de upload)
+      .should('exist') // Verifica se o campo de upload existe na página
+      .selectFile('cypress/fixtures/example.json', { action: 'drag-drop' }) // Usa o comando selectFile com a opção action: 'drag-drop' para simular um drag-and-drop do arquivo example.json da pasta fixtures
+      .then(input => { // Usa uma função then para acessar o elemento input após o upload
+        expect(input[0].files[0].name).to.equal('example.json') // Verifica se o nome do arquivo carregado é 'example.json'
+      })
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it.only('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+
+    // ✦ Fazer upload de um arquivo utilizando uma fixture para a qual foi dada um alias e verificar se o arquivo foi carregado corretamente ✦ //
+
+    cy.fixture('example.json').as('sampleFile') // Usa o comando fixture para carregar o arquivo example.json da pasta fixtures e dá um alias 'sampleFile' para ele
+
+    cy.get('input[type="file"]') // Seleciona o elemento de input do tipo file (campo de upload)
+      .should('exist') // Verifica se o campo de upload existe na página
+      .selectFile('@sampleFile') // Usa o comando selectFile com o alias '@sampleFile' para selecionar o arquivo carregado anteriormente
+      .then(input => { // Usa uma função then para acessar o elemento input após o upload
+        expect(input[0].files[0].name).to.equal('example.json') // Verifica se o nome do arquivo carregado é 'example.json'
+      })
   })
 })
