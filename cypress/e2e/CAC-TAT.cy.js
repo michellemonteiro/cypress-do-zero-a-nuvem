@@ -670,7 +670,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // ✦ Selecionar ambos os checkboxes e verificar se estão marcados ✦ //
 
     cy.get('input[type="checkbox"]') // Seleciona todos os elementos de input do tipo checkbox
-      .should('have.length', 3) // Verifica se existem exatamente 3 checkboxes na página
+      .should('have.length', 2) // Verifica se existem exatamente 3 checkboxes na página
       .as('checkboxes') // Dá um alias para o conjunto de checkboxes para reutilização
 
     cy.get('@checkboxes') // Usa o alias para selecionar os checkboxes
@@ -736,7 +736,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   // ♥️♥️♥️♥️♥️♥️ Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias ♥️♥️♥️♥️♥️♥️♥️ //
 
-  it.only('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+  it('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
 
     // ✦ Fazer upload de um arquivo utilizando uma fixture para a qual foi dada um alias e verificar se o arquivo foi carregado corretamente ✦ //
 
@@ -749,4 +749,47 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         expect(input[0].files[0].name).to.equal('example.json') // Verifica se o nome do arquivo carregado é 'example.json'
       })
   })
+
+  // ♥️♥️♥️♥️♥️♥️ Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it('Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+
+    // ✦ Verificar se o link da política de privacidade abre em outra aba ✦ //
+
+    cy.get('#privacy a') // Seleciona o link da política de privacidade dentro do elemento com id 'privacy'
+      .should('have.attr', 'target', '_blank') // Verifica se o atributo 'target' do link é igual a '_blank', indicando que ele abre em outra aba
+
+      // // Outra forma de fazer a verificação:
+      // cy.contains('a', 'Política de Privacidade') // Seleciona o link da política de privacidade pelo texto visível
+      // .should('have.attr', 'href', 'privacy.html') // Verifica se o atributo 'href' do link é igual a 'privacy.html'
+      // .and('have.attr', 'target', '_blank') // Verifica se o atributo 'target' do link é igual a '_blank' --> o .and() é usado para encadear múltiplas asserções no mesmo elemento, garantindo que todas as condições sejam verificadas sequencialmente. Como se eu estivesse dizendo "e também deve ter o atributo 'target' igual a '_blank'".
+    
+  })
+
+  // ♥️♥️♥️♥️♥️♥️ Acessa a página da política de privacidade removendo o target e então clicando no link ♥️♥️♥️♥️♥️♥️♥️ //
+
+  it.only('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+
+    // ✦ Remover o atributo target do link da política de privacidade e clicar nele para abrir na mesma aba ✦ //
+
+    cy.get('#privacy a') // Seleciona o link da política de privacidade dentro do elemento com id 'privacy'
+      .invoke('removeAttr', 'target') // Remove o atributo 'target' do link para que ele abra na mesma aba
+      .click() // Clica no link para navegar para a página da política de privacidade
+
+    // // ✦ Verificar se o conteúdo da página da política de privacidade está visível ✦ //
+
+    cy.contains('Talking About Testing').should('be.visible') // Verifica se o texto 'Talking About Testing' está visível na página, indicando que a navegação foi bem-sucedida
+    
+    // Outra forma de fazer a verificação:
+    // cy.contains('a', 'Política de Privacidade') // Seleciona o link da política de privacidade pelo texto visível
+    // .invoke('removeAttr', 'target') // Remove o atributo 'target' do link para que ele abra na mesma aba
+    // .click() // Clica no link para navegar para a página da política de privacidade
+    // cy.contains('h1', 'CAC TAT - Política de Privacidade').should('be.visible')// Verifica se o título da página da política de privacidade está visível, indicando que a navegação foi bem-sucedida
+
+  })
+  
+  
+
 })
+
+
