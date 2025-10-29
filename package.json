@@ -5,7 +5,10 @@
   "main": "src/index.html",
   "scripts": {
   "cy:open": "cypress open",
-  "test": "cypress run"
+  "comentário": "para testar a responsibilidade do site web em mobile via linha de comando",
+  "cy:open:mobile": "cypress open --config viewportWidth=410,viewportHeight=860",
+  "test": "cypress run",
+  "teste:mobile": "cypress run --config viewportWidth=410,viewportHeight=860"
 },
   "repository": {
     "type": "git",

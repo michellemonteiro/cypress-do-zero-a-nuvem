@@ -768,7 +768,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   // ♥️♥️♥️♥️♥️♥️ Acessa a página da política de privacidade removendo o target e então clicando no link ♥️♥️♥️♥️♥️♥️♥️ //
 
-  it.only('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+  it('Acessa a página da política de privacidade removendo o target e então clicando no link', () => {
 
     // ✦ Remover o atributo target do link da política de privacidade e clicar nele para abrir na mesma aba ✦ //
 
